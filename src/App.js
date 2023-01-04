@@ -6,10 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [
-        { front: 'front1', back: 'back1' },
-        { front: 'front2', back: 'back2' },
-      ],
+      cards: [],
       editor: true,
     };
   }
@@ -25,7 +22,12 @@ class App extends React.Component {
     this.setState({ cards });
   }
 
+  getCard = index => {
+    return this.state.cards[index];
+  }
+
   switchMode = () => this.setState({ editor: !this.state.editor });
+
 
   render() {
     if (this.state.editor) {
@@ -39,7 +41,7 @@ class App extends React.Component {
       );
     }
     else {
-      return <CardViewer switchMode={this.switchMode} />;
+      return <CardViewer switchMode={this.switchMode} getCard={this.getCard}/>;
     }
   }
 }
