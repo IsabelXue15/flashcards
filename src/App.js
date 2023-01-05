@@ -26,6 +26,10 @@ class App extends React.Component {
     return this.state.cards[index];
   }
 
+  getAmount = () => {
+    return this.state.cards.length;
+  }
+
   switchMode = () => this.setState({ editor: !this.state.editor });
 
 
@@ -41,7 +45,7 @@ class App extends React.Component {
       );
     }
     else {
-      return <CardViewer switchMode={this.switchMode} getCard={this.getCard}/>;
+      return <CardViewer switchMode={this.switchMode} getCard={this.getCard} getAmount={this.getAmount}/>;
     }
   }
 }

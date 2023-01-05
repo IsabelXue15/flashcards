@@ -23,11 +23,19 @@ class CardViewer extends React.Component {
         }
     }
 
-   nextCard = () => {
-    let newIndex = this.state.num + 1;
-    this.setState({ num: newIndex, side: false });
-    document.getElementById("cardSide").innerHTML = "Front";
-   }
+    nextCard = () => {
+        if (this.state.num !== (this.props.getAmount() - 1)){
+            this.setState({ num: (this.state.num + 1), side: false });
+            document.getElementById("cardSide").innerHTML = "Front";
+        }
+    }
+
+    previousCard = () => {
+        if (this.state.num !== 0) {
+            this.setState({ num: (this.state.num - 1), side: false });
+            document.getElementById("cardSide").innerHTML = "Front";
+        }
+    }
 
     getCard = index => this.props.getCard(index); 
 
@@ -49,7 +57,7 @@ class CardViewer extends React.Component {
                 <button onClick= {() => this.switchSide(number)}>Flip</button>
                 <br></br>
                 <br></br>
-                <button> Backward </button>
+                <button onClick = {this.previousCard}> Backward </button>
                 <button onClick = {this.nextCard}> Forward </button>
                 <hr></hr>
                 <br></br>
