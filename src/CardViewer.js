@@ -6,9 +6,10 @@ class CardViewer extends React.Component {
         this.state = {
             side: false,
             num: 0,
+            cardClicked: false,
         };
     }
-    
+
     switchSide = number => {
         this.setState( {side: !this.state.side });
         const cardFront = this.getCard(number).front;
@@ -24,16 +25,26 @@ class CardViewer extends React.Component {
     }
 
     nextCard = () => {
+        this.setState( {cardClicked: true} );
         if (this.state.num !== (this.props.getAmount() - 1)){
+            console.log(this.state.num);
             this.setState({ num: (this.state.num + 1), side: false });
             document.getElementById("cardSide").innerHTML = "Front";
-        }
+        }   
     }
 
     previousCard = () => {
+        this.setState( {cardClicked: true} );
         if (this.state.num !== 0) {
             this.setState({ num: (this.state.num - 1), side: false });
             document.getElementById("cardSide").innerHTML = "Front";
+        }
+        console.log(this.state.num);
+    }
+    
+    progressBar = () => {
+        if (this.state.cardClicked) {
+            document.getElementById("progress").innerHTML = "Card " + (this.state.num + 1) + "/" + this.props.getAmount();
         }
     }
 
@@ -42,11 +53,13 @@ class CardViewer extends React.Component {
     render() {
         const number = this.state.num;
         const card = this.getCard(number);
+        this.progressBar();
 
         return (
             <div>
                 <h2>Card Viewer</h2>
-                <table>
+                <div id="progress">First Card</div>
+                <table onClick= {() => this.switchSide(number)}>
                     <thead>
                         <tr><th id="cardSide">Front</th></tr>
                     </thead>
@@ -54,8 +67,6 @@ class CardViewer extends React.Component {
                         <tr><td id="cardContent">{ card.front }</td></tr>
                     </tbody>
                 </table>
-                <button onClick= {() => this.switchSide(number)}>Flip</button>
-                <br></br>
                 <br></br>
                 <button onClick = {this.previousCard}> Backward </button>
                 <button onClick = {this.nextCard}> Forward </button>
