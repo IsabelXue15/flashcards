@@ -4,22 +4,35 @@ class CardViewer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            number: 0,
-            side: true,
+            side: false,
+            num: 0,
         };
     }
     
-    switchSide = () => {
+    switchSide = number => {
         this.setState( {side: !this.state.side });
+        const cardFront = this.getCard(number).front;
+        const cardBack = this.getCard(number).back;
         if (this.state.side){
-            console.log("true");
+            document.getElementById("cardSide").innerHTML = "Front";
+            document.getElementById("cardContent").innerHTML = cardFront;
+        }
+        else {
+            document.getElementById("cardSide").innerHTML = "Back";
+            document.getElementById("cardContent").innerHTML = cardBack;
         }
     }
+
+   nextCard = () => {
+    let newIndex = this.state.num + 1;
+    this.setState({ num: newIndex, side: false });
+    document.getElementById("cardSide").innerHTML = "Front";
+   }
 
     getCard = index => this.props.getCard(index); 
 
     render() {
-        let number = 0;
+        const number = this.state.num;
         const card = this.getCard(number);
 
         return (
@@ -27,17 +40,17 @@ class CardViewer extends React.Component {
                 <h2>Card Viewer</h2>
                 <table>
                     <thead>
-                        <tr><th>Side</th></tr>
+                        <tr><th id="cardSide">Front</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>{ card.front }</td></tr>
+                        <tr><td id="cardContent">{ card.front }</td></tr>
                     </tbody>
                 </table>
-                <button onClick= {this.switchSide}>Flip</button>
+                <button onClick= {() => this.switchSide(number)}>Flip</button>
                 <br></br>
                 <br></br>
                 <button> Backward </button>
-                <button> Forward </button>
+                <button onClick = {this.nextCard}> Forward </button>
                 <hr></hr>
                 <br></br>
                 <button onClick={this.props.switchMode}>Go to Card Editor</button>
