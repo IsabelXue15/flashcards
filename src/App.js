@@ -14,7 +14,8 @@ class App extends React.Component {
   addCard = card => {
     const cardFront = card.front;
     const cardBack = card.back;
-    if (cardFront === cardFront.trim() && cardBack === cardBack.trim()) {
+    if (cardFront === cardFront.trim() && cardBack === cardBack.trim() && cardFront && cardBack) { 
+      // makes sure there are no white spaces and makes sure they are not blank
       const cards = this.state.cards.slice().concat(card);
       this.setState({ cards });
     }
