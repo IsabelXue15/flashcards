@@ -12,8 +12,12 @@ class App extends React.Component {
   }
 
   addCard = card => {
-    const cards = this.state.cards.slice().concat(card);
-    this.setState({ cards });
+    const cardFront = card.front;
+    const cardBack = card.back;
+    if (cardFront === cardFront.trim() && cardBack === cardBack.trim()) {
+      const cards = this.state.cards.slice().concat(card);
+      this.setState({ cards });
+    }
   };
 
   deleteCard = index => {
@@ -30,7 +34,11 @@ class App extends React.Component {
     return this.state.cards.length;
   }
 
-  switchMode = () => this.setState({ editor: !this.state.editor });
+  switchMode = () => {
+    if (this.state.cards.length !== 0) {
+      this.setState({ editor: !this.state.editor });
+    }
+  }
 
 
   render() {

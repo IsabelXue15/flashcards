@@ -27,7 +27,6 @@ class CardViewer extends React.Component {
     nextCard = () => {
         this.setState( {cardClicked: true} );
         if (this.state.num !== (this.props.getAmount() - 1)){
-            console.log(this.state.num);
             this.setState({ num: (this.state.num + 1), side: false });
             document.getElementById("cardSide").innerHTML = "Front";
         }   
@@ -39,7 +38,6 @@ class CardViewer extends React.Component {
             this.setState({ num: (this.state.num - 1), side: false });
             document.getElementById("cardSide").innerHTML = "Front";
         }
-        console.log(this.state.num);
     }
     
     progressBar = () => {
