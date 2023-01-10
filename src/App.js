@@ -1,13 +1,16 @@
 import React from 'react';
 import CardEditor from './CardEditor';
 import CardViewer from './CardViewer';
+import Homepage from './Homepage';
+
+import { Switch, Route } from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
-      editor: true,
+      // editor: true,
     };
   }
 
@@ -35,28 +38,50 @@ class App extends React.Component {
     return this.state.cards.length;
   }
 
-  switchMode = () => {
-    if (this.state.cards.length !== 0) {
-      this.setState({ editor: !this.state.editor });
-    }
-  }
+  // switchMode = () => {
+  //   if (this.state.cards.length !== 0) {
+  //     this.setState({ editor: !this.state.editor });
+  //   }
+  // } 
 
 
   render() {
-    if (this.state.editor) {
-      return (
-        <CardEditor 
-          addCard={this.addCard} 
-          cards={this.state.cards} 
-          deleteCard={this.deleteCard}
-          switchMode={this.switchMode} 
-        />
-      );
-    }
-    else {
-      return <CardViewer switchMode={this.switchMode} getCard={this.getCard} getAmount={this.getAmount}/>;
-    }
+    return (
+      <Switch>
+        <Route exact path="/">
+          <Homepage />
+        </Route>
+        <Route exact path="/editor">
+          <CardEditor 
+            addCard={this.addCard} 
+            cards={this.state.cards} 
+            deleteCard={this.deleteCard}
+          />
+        </Route>
+        <Route exact path="/viewer">
+          <CardViewer 
+            getCard={this.getCard} 
+            getAmount={this.getAmount}
+          />
+        </Route>  
+      </Switch>
+    );
   }
+
+  //   if (this.state.editor) {
+  //     return (
+  //       <CardEditor 
+  //         addCard={this.addCard} 
+  //         cards={this.state.cards} 
+  //         deleteCard={this.deleteCard}
+  //         switchMode={this.switchMode} 
+  //       />
+  //     );
+  //   }
+  //   else {
+  //     return <CardViewer switchMode={this.switchMode} getCard={this.getCard} getAmount={this.getAmount}/>;
+  //   }
+  // }
 }
 
 export default App;

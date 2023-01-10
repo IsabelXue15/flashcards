@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from "react-router-dom";
+
 class CardViewer extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +71,7 @@ class CardViewer extends React.Component {
                 <button onClick = {this.nextCard}> Forward </button>
                 <hr></hr>
                 <br></br>
-                <button onClick={this.props.switchMode}>Go to Card Editor</button>
+                <Link to="/editor">Go to Card Editor</Link>
             </div>
         );
     }
