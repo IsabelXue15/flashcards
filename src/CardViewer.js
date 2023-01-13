@@ -54,26 +54,33 @@ class CardViewer extends React.Component {
         const card = this.getCard(number);
         this.progressBar(); // calls progress bar to appear
 
-        return (
-            <div>
-                <h2>Card Viewer</h2>
-                <div id="progress">First Card</div>
-                <table onClick= {() => this.switchSide(number)}>
-                    <thead>
-                        <tr><th id="cardSide">Front</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td id="cardContent">{ card.front }</td></tr>
-                    </tbody>
-                </table>
-                <br></br>
-                <button onClick = {this.previousCard}> Backward </button>
-                <button onClick = {this.nextCard}> Forward </button>
-                <hr></hr>
-                <br></br>
-                <Link to="/editor">Go to Card Editor</Link>
-            </div>
-        );
+        if (card) {
+            return (
+                <div>
+                    <h2>Card Viewer</h2>
+                    <div id="progress">First Card</div>
+                    <table onClick= {() => this.switchSide(number)}>
+                        <thead>
+                            <tr><th id="cardSide">Front</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td id="cardContent">{ card.front }</td></tr>
+                        </tbody>
+                    </table>
+                    <br></br>
+                    <button onClick = {this.previousCard}> Backward </button>
+                    <button onClick = {this.nextCard}> Forward </button>
+                    <hr></hr>
+                    <br></br>
+                    <Link to="/editor">Go to Card Editor</Link>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>No cards</div>
+            )
+        }
     }
 }
 
