@@ -5,7 +5,8 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
 import firebase from "firebase/compat/app";
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import 'firebase/compat/database';
 import { createStore, combineReducers } from 'redux';
 import {
   ReactReduxFirebaseProvider,
