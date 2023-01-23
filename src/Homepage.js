@@ -12,7 +12,13 @@ const Homepage = (props) => {
     }
 
     if(isEmpty(props.decks)) {
-        return<div>No Cards</div>;
+        return (
+            <div>
+                <h1>Flashcards</h1>
+                <h3><Link to="/editor">Go to Card Editor</Link></h3>
+                <br></br>
+            </div>
+        );
     }
 
     const nameList = Object.keys(props.decks).map((deckId, index) => {
