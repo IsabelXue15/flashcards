@@ -1,66 +1,52 @@
 import React from 'react';
 
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-class Homepage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
+const Homepage = (props) => {
+
+    if (!isLoaded(props.decks)) {
+        return<div>Loading...</div>;
     }
 
-    render() {
-        // if (!isLoaded(this.props.idList)) {
-        //     return<div>Loading...</div>;
-        // }
-        console.log("my props", this.props);
-        const idList = this.props.idList.map((idList, listLength) => {
-            return (
-                <tr key={listLength-1}>
-                    <td><Link to={`/viewer/${idList}`}>{ idList }</Link></td>
-                </tr>
-            );
-        });
-    
-        return (
-            <div>
-                <Link to="/editor">Go to Card Editor</Link>
-                <br></br>
-                <Link to="/viewer">Go to Card Viewer</Link>
-                <br></br>
-                <table>
-                    <tbody>{ idList }</tbody>
-                </table>
-            </div>
-        ); 
+    if(isEmpty(props.decks)) {
+        return<div>No Cards</div>;
     }
+
+    const nameList = Object.keys(props.decks).map((deckId, index) => {
+    console.log(props.decks);
+    return (
+        <tr key={index}>
+            <td><Link to={`/viewer/${deckId}`}>{ props.decks[deckId].name }</Link></td>
+        </tr>
+    );
+    });
+
+    return (
+        <div>
+            <h1>Flashcards</h1>
+            <h3><Link to="/editor">Go to Card Editor</Link></h3>
+            <br></br>
+            <table>
+                <thead><tr><th>My Decks</th></tr></thead>
+                <tbody>{ nameList }</tbody>
+            </table>
+        </div>
+    ); 
 }
 
-const mapStateToProps = (state, props) => {
-    console.log(state);
-    const idList = Object.keys(state.firebase.data.flashcards.homepage);
-    console.log('idList', idList);
-    const listLength = idList.length;
-    const nameList = [];
-    for (const element of idList)
-    {
-        console.log("this state", state)
-        // const myName = Object.keys(state.firebase.data.flashcards.homepage[props.match.params.element]);
-        // console.log(myName);
-        // nameList.push(myName);
-    }    
-    return { idList: idList, listLength: listLength, nameList: nameList };
+const mapStateToProps = (state) => {
+    console.log(state.firebase.data);
+    const decks = state.firebase.data.homepage;
+    return { decks: decks };
 }
 
 export default compose(
-    withRouter,
     firebaseConnect(props => {
-        console.log('props', props)
-        const homepage = props.match.params.homepage;
-        return [{ path: `/flashcards/homepage`, storeAs: homepage }];
+        console.log('props', props);
+        return [{ path: "/homepage", storeAs: "homepage" }];
     }),
     connect(mapStateToProps),
 )(Homepage);
